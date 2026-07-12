@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riley "Ace" Workman — Mechatronics Engineer</title>
+<meta name="description" content="Portfolio of Riley Workman — Mechatronics Engineer, robotics researcher, and builder of autonomous systems.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-base:#0a0c0e;
+    --bg-panel:#13161a;
+    --bg-panel-2:#181c21;
+    --line:#252a30;
+    --line-soft:#1c2025;
+    --text-primary:#ece9e2;
+    --text-muted:#8a9299;
+    --text-dim:#565d63;
+    --copper:#e8963d;
+    --cyan:#4fd8d0;
+    --radius:2px;
+    --mono: 'IBM Plex Mono', monospace;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-base);
+    color:var(--text-primary);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--copper);color:#0a0c0e;}
+
+  /* background schematic grid */
+  .grid-bg{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:48px 48px;
+    opacity:0.5;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+  }
+
+  .wrap{max-width:1100px;margin:0 auto;padding:0 32px;position:relative;z-index:1;}
+
+  /* trace rail running down the page */
+  .rail{
+    position:absolute;
+    left:32px;
+    top:0;
+    bottom:0;
+    width:1px;
+    background:var(--line);
+    z-index:0;
+  }
+  @media (max-width:760px){ .rail{display:none;} }
+
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,12,14,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1100px;margin:0 auto;}
+  .nav-mark{font-family:var(--mono);font-size:13px;letter-spacing:0.06em;color:var(--cyan);display:flex;align-items:center;gap:8px;}
+  .nav-mark .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+  .nav-links{display:flex;gap:28px;font-family:var(--mono);font-size:12.5px;letter-spacing:0.04em;color:var(--text-muted);}
+  .nav-links a{transition:color 0.2s;position:relative;}
+  .nav-links a:hover, .nav-links a:focus-visible{color:var(--text-primary);}
+  .nav-links a:focus-visible{outline:1px solid var(--cyan);outline-offset:4px;}
+  @media (max-width:640px){ .nav-links{display:none;} }
+
+  /* HERO */
+  .hero{position:relative;padding:120px 0 100px;}
+  .hero .eyebrow{
+    font-family:var(--mono);font-size:12.5px;color:var(--copper);
+    letter-spacing:0.08em;display:flex;align-items:center;gap:10px;margin-bottom:28px;
+  }
+  .hero .eyebrow::before{content:'';width:22px;height:1px;background:var(--copper);}
+  h1{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    line-height:1.04;
+    letter-spacing:-0.01em;
+    max-width:14ch;
+  }
+  h1 .accent{color:var(--cyan);}
+  .hero-sub{
+    margin-top:26px;max-width:56ch;
+    font-size:1.08rem;color:var(--text-muted);
+    font-weight:400;
+  }
+  .hero-sub b{color:var(--text-primary);font-weight:500;}
+  .hero-actions{margin-top:40px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
+  .btn{
+    font-family:var(--mono);font-size:13px;letter-spacing:0.03em;
+    padding:13px 22px;border-radius:var(--radius);
+    border:1px solid var(--copper);color:var(--bg-base);background:var(--copper);
+    transition:all 0.2s ease;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+  .btn:hover, .btn:focus-visible{background:transparent;color:var(--copper);}
+  .btn.ghost{background:transparent;color:var(--text-primary);border-color:var(--line);}
+  .btn.ghost:hover, .btn.ghost:focus-visible{border-color:var(--text-muted);}
+  .btn:focus-visible{outline:2px solid var(--cyan);outline-offset:2px;}
+
+  .hero-specs{
+    margin-top:70px;
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .hero-specs div{padding:18px 20px;border-left:1px solid var(--line);}
+  .hero-specs div:first-child{border-left:none;}
+  .hero-specs .k{font-family:var(--mono);font-size:10.5px;color:var(--text-dim);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;}
+  .hero-specs .v{font-family:var(--display);font-size:1.15rem;font-weight:600;}
+  @media (max-width:700px){ .hero-specs{grid-template-columns:repeat(2,1fr);} .hero-specs div{border-left:1px solid var(--line);} .hero-specs div:nth-child(odd){border-left:none;} .hero-specs div:nth-child(n+3){border-top:1px solid var(--line);}}
+
+  /* SECTION shared */
+  section{position:relative;padding:90px 0;border-top:1px solid var(--line);}
+  .section-head{display:flex;align-items:baseline;gap:16px;margin-bottom:52px;}
+  .section-num{font-family:var(--mono);font-size:12.5px;color:var(--cyan);}
+  h2{font-family:var(--display);font-size:clamp(1.6rem,3vw,2.1rem);font-weight:600;letter-spacing:-0.01em;}
+  .section-node{
+    position:absolute;left:32px;top:88px;
+    width:9px;height:9px;border-radius:50%;
+    background:var(--bg-base);border:2px solid var(--cyan);
+    transform:translateX(-4.5px);
+    z-index:2;
+  }
+  @media (max-width:760px){ .section-node{display:none;} }
+
+  /* ABOUT */
+  .about-body{max-width:66ch;color:var(--text-muted);font-size:1.02rem;}
+  .about-body b{color:var(--text-primary);font-weight:500;}
+  .about-tags{margin-top:36px;display:flex;flex-wrap:wrap;gap:10px;}
+  .tag{
+    font-family:var(--mono);font-size:11.5px;color:var(--text-muted);
+    border:1px solid var(--line);padding:7px 12px;border-radius:var(--radius);
+    letter-spacing:0.02em;
+  }
+
+  /* PROJECTS - datasheet cards */
+  .projects{display:flex;flex-direction:column;gap:2px;}
+  .card{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:36px;
+    display:grid;grid-template-columns:1.1fr 1fr;gap:40px;
+    margin-bottom:20px;
+    transition:border-color 0.25s ease;
+  }
+  .card:hover{border-color:#3a4148;}
+  @media (max-width:800px){ .card{grid-template-columns:1fr;} }
+  .card-tag{font-family:var(--mono);font-size:11px;color:var(--copper);letter-spacing:0.08em;margin-bottom:12px;}
+  .card h3{font-family:var(--display);font-size:1.4rem;font-weight:600;margin-bottom:14px;}
+  .card p{color:var(--text-muted);font-size:0.97rem;max-width:52ch;}
+  .card-specs{border-left:1px solid var(--line);padding-left:32px;}
+  @media (max-width:800px){ .card-specs{border-left:none;padding-left:0;border-top:1px solid var(--line);padding-top:24px;} }
+  .spec-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:0.88rem;}
+  .spec-row:last-child{border-bottom:none;}
+  .spec-row .k{font-family:var(--mono);color:var(--text-dim);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;}
+  .spec-row .v{color:var(--text-primary);text-align:right;}
+
+  /* EXPERIENCE / TIMELINE */
+  .tl{border-left:1px solid var(--line);margin-left:6px;}
+  .tl-item{position:relative;padding:0 0 40px 32px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{content:'';position:absolute;left:-5px;top:4px;width:9px;height:9px;border-radius:50%;background:var(--bg-base);border:2px solid var(--copper);}
+  .tl-date{font-family:var(--mono);font-size:11.5px;color:var(--text-dim);letter-spacing:0.05em;margin-bottom:6px;}
+  .tl-item h4{font-family:var(--display);font-size:1.1rem;font-weight:600;margin-bottom:6px;}
+  .tl-item p{color:var(--text-muted);font-size:0.95rem;max-width:60ch;}
+
+  /* CONTACT */
+  .contact-grid{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:40px;}
+  .contact-links{display:flex;flex-direction:column;gap:14px;}
+  .contact-links a{
+    font-family:var(--display);font-size:1.6rem;font-weight:600;
+    display:inline-flex;align-items:center;gap:12px;color:var(--text-primary);
+    transition:color 0.2s;width:fit-content;
+  }
+  .contact-links a:hover, .contact-links a:focus-visible{color:var(--cyan);}
+  .contact-links a:focus-visible{outline:1px solid var(--cyan);outline-offset:6px;}
+  .contact-links span{font-family:var(--mono);font-size:12px;color:var(--text-dim);}
+
+  footer{border-top:1px solid var(--line);padding:28px 0;}
+  .footer-row{display:flex;justify-content:space-between;color:var(--text-dim);font-family:var(--mono);font-size:11.5px;letter-spacing:0.03em;flex-wrap:wrap;gap:10px;}
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="rail"></div>
+
+<header>
+  <div class="nav">
+    <div class="nav-mark"><span class="dot"></span>R.WORKMAN</div>
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#work">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" style="border-top:none;">
+    <div class="wrap">
+      <div class="eyebrow">MECHATRONICS ENGINEER — ROBOTICS &amp; AUTONOMOUS SYSTEMS</div>
+      <h1>Riley "Ace" Workman builds machines that <span class="accent">move with purpose.</span></h1>
+      <p class="hero-sub">Robotics &amp; automation engineer finishing an Honours BEng in Mechatronics at Ontario Tech University, with a double major in Pure &amp; Applied Mathematics. <b>Starting an MASc in Mechatronics this fall</b>, researching AI/ML for intelligent autonomous systems under Dr. Haoxiang Lang. Formerly a Senior Actuarial &amp; Risk Analyst — now building robots instead of pricing risk.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#work">View projects</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+      <div class="hero-specs">
+        <div><div class="k">Focus</div><div class="v">Robotic Manipulation</div></div>
+        <div><div class="k">Degree</div><div class="v">BEng Mechatronics '26</div></div>
+        <div><div class="k">Next</div><div class="v">MASc, Fall 2026</div></div>
+        <div><div class="k">Base</div><div class="v">Ontario, Canada</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-node"></div>
+    <div class="wrap">
+      <div class="section-head"><span class="section-num">01</span><h2>About</h2></div>
+      <p class="about-body">I like systems that have to work in the real world — where the math meets friction, backlash, and noisy sensors. My background spans <b>dual-arm manipulation, embedded firmware, computer vision, and simulation</b>, built through capstone robotics, a humanoid-arm research publication, and a wearable ASL-translation glove. Before engineering, I spent years as an actuarial and risk analyst running stochastic and Monte Carlo models — training that now shows up in how I approach uncertainty, reliability, and failure analysis (DFMEA/FMECA) in hardware.</p>
+      <div class="about-tags">
+        <span class="tag">ROS / Embedded C++</span>
+        <span class="tag">STM32 / ESP32</span>
+        <span class="tag">Python · OpenCV</span>
+        <span class="tag">PLC / Ladder Logic</span>
+        <span class="tag">Monte Carlo Simulation</span>
+        <span class="tag">Altium PCB Design</span>
+        <span class="tag">Kinematics &amp; Manipulability Analysis</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="section-node"></div>
+    <div class="wrap">
+      <div class="section-head"><span class="section-num">02</span><h2>Selected Projects</h2></div>
+      <div class="projects">
+
+        <div class="card">
+          <div>
+            <div class="card-tag">CAPSTONE — DUAL-ARM ASSISTIVE ROBOTICS</div>
+            <h3>ARHA — Autonomous Retirement Home Assistant</h3>
+            <p>A semi-autonomous dual-arm robot designed for long-term care settings, developed with a five-person team under Dr. Haoxiang Lang. Led documentation, risk analysis, and a Monte Carlo study on arm kinematics using Yoshikawa manipulability analysis to validate reachability and dexterity.</p>
+          </div>
+          <div class="card-specs">
+            <div class="spec-row"><span class="k">Actuation</span><span class="v">12× MyActuator RMD‑X8‑32</span></div>
+            <div class="spec-row"><span class="k">Compute</span><span class="v">STM32H723ZG + Intel NUC i7</span></div>
+            <div class="spec-row"><span class="k">Perception</span><span class="v">2× RealSense D435</span></div>
+            <div class="spec-row"><span class="k">End Effector</span><span class="v">PincOpen grippers</span></div>
+            <div class="spec-row"><span class="k">My Role</span><span class="v">Documentation &amp; Risk Lead</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="card-tag">RESEARCH — HUMANOID ROBOTICS</div>
+            <h3>GRASP-01 — Low-Cost 7-DOF Humanoid Arm</h3>
+            <p>Co-authored a research publication with Dr. Lang on a low-cost 7-degree-of-freedom humanoid robotic arm, presented at Polytechnique Montréal. Focused on making expressive, human-scale manipulation accessible outside high-end research labs.</p>
+          </div>
+          <div class="card-specs">
+            <div class="spec-row"><span class="k">DOF</span><span class="v">7</span></div>
+            <div class="spec-row"><span class="k">Design Goal</span><span class="v">Low-cost, humanoid-scale</span></div>
+            <div class="spec-row"><span class="k">Output</span><span class="v">Co-authored publication</span></div>
+            <div class="spec-row"><span class="k">Presented</span><span class="v">Polytechnique Montréal, 2025</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="card-tag">WEARABLE — GESTURE RECOGNITION</div>
+            <h3>ASL Translation Glove</h3>
+            <p>A wearable device that translates American Sign Language gestures into text/speech in real time, built around a flex-sensor array and an ESP32 gesture-recognition pipeline.</p>
+          </div>
+          <div class="card-specs">
+            <div class="spec-row"><span class="k">MCU</span><span class="v">ESP32</span></div>
+            <div class="spec-row"><span class="k">Sensing</span><span class="v">Flex sensor array</span></div>
+            <div class="spec-row"><span class="k">Pipeline</span><span class="v">Gesture recognition, real-time</span></div>
+            <div class="spec-row"><span class="k">Type</span><span class="v">Personal / team initiative</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="card-tag">FORMULA SAE — ELECTRICAL SYSTEMS</div>
+            <h3>Ontario Tech Racing — PCB Development</h3>
+            <p>Contributing member of the Formula SAE electrical/electronics team, designing printed circuit boards in Altium for the team's competition vehicle.</p>
+          </div>
+          <div class="card-specs">
+            <div class="spec-row"><span class="k">Tooling</span><span class="v">Altium Designer</span></div>
+            <div class="spec-row"><span class="k">Scope</span><span class="v">PCB schematic &amp; layout</span></div>
+            <div class="spec-row"><span class="k">Team</span><span class="v">Ontario Tech Racing FSAE</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="card-tag">STUDENT ROCKETRY — SAFETY &amp; AVIONICS</div>
+            <h3>Ontario Tech Space &amp; Rocketry</h3>
+            <p>Serving as Avionics lead and Chief Safety Officer, overseeing flight electronics and safety protocol for student-built high-power rockets.</p>
+          </div>
+          <div class="card-specs">
+            <div class="spec-row"><span class="k">Roles</span><span class="v">Avionics · Chief Safety Officer</span></div>
+            <div class="spec-row"><span class="k">Domain</span><span class="v">Flight electronics, safety review</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-node"></div>
+    <div class="wrap">
+      <div class="section-head"><span class="section-num">03</span><h2>Experience &amp; Education</h2></div>
+      <div class="tl">
+        <div class="tl-item">
+          <div class="tl-date">FALL 2026 →</div>
+          <h4>MASc, Mechatronics Engineering — Ontario Tech University</h4>
+          <p>Part-time research MASc under Dr. Haoxiang Lang, focused on AI/ML for intelligent autonomous systems and robotics. Supported in part by a Mitacs Accelerate award.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">EXPECTED APRIL 2026</div>
+          <h4>Honours BEng, Mechatronics Engineering — Ontario Tech University</h4>
+          <p>Robotics &amp; Automation specialization. Double major in Pure &amp; Applied Mathematics, University of Calgary.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">PRIOR</div>
+          <h4>Senior Actuarial &amp; Risk Management Analyst — AON</h4>
+          <p>Built stochastic financial and Monte Carlo simulation models (@RISK, VBA automation) for enterprise risk analysis — a quantitative foundation now applied to robotics reliability and simulation work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-node"></div>
+    <div class="wrap">
+      <div class="section-head"><span class="section-num">04</span><h2>Get in touch</h2></div>
+      <div class="contact-grid">
+        <div class="contact-links">
+          <a href="mailto:hello@example.com">hello@example.com</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn <span>↗</span></a>
+          <a href="https://github.com" target="_blank" rel="noopener">GitHub <span>↗</span></a>
+        </div>
+        <div style="font-family:var(--mono);font-size:12px;color:var(--text-dim);max-width:30ch;">
+          Open to conversations on robotics research, capstone collaboration, and full-time or research opportunities.
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>© 2026 RILEY WORKMAN</span>
+    <span>BUILT IN ONTARIO, CANADA</span>
+  </div>
+</footer>
+
+</body>
+</html>
