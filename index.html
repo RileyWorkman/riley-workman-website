@@ -5,9 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Riley "Ace" Workman — Mechatronics Engineer</title>
 <meta name="description" content="Portfolio of Riley Workman — Mechatronics Engineer, robotics researcher, and builder of autonomous systems.">
+<meta name="robots" content="index,follow">
+<meta name="theme-color" content="#0a0c0e">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Riley Workman — Mechatronics Engineer">
+<meta property="og:description" content="Robotics engineer focused on autonomous systems, mechatronics, and safety-driven engineering.">
+<meta property="og:image" content="ARHA Image.png">
+<meta property="og:url" content="https://rileyworkman.github.io/riley-workman-website/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Riley Workman — Mechatronics Engineer">
+<meta name="twitter:description" content="Portfolio of robotics, mechatronics, and autonomous systems projects.">
+<meta name="twitter:image" content="ARHA Image.png">
+<link rel="canonical" href="https://rileyworkman.github.io/riley-workman-website/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Riley Workman",
+  "jobTitle": "Mechatronics Engineer",
+  "description": "Mechatronics engineer focused on robotics, autonomous systems, and safety-first engineering.",
+  "url": "https://rileyworkman.github.io/riley-workman-website/",
+  "alumniOf": [
+    "Ontario Tech University",
+    "University of Calgary"
+  ]
+}
+</script>
 <style>
   :root{
     --bg-base:#0a0c0e;
@@ -16,7 +42,7 @@
     --line:#252a30;
     --line-soft:#1c2025;
     --text-primary:#ece9e2;
-    --text-muted:#8a9299;
+    --text-muted:#a8b5c3;
     --text-dim:#565d63;
     --copper:#e8963d;
     --cyan:#4fd8d0;
@@ -42,23 +68,34 @@
   a{color:inherit;text-decoration:none;}
   ::selection{background:var(--copper);color:#0a0c0e;}
 
-  /* animated circuit background */
+  .skip-link{
+    position:absolute;
+    left:16px;
+    top:-48px;
+    background:var(--copper);
+    color:#0a0c0e;
+    font-family:var(--mono);
+    font-size:12px;
+    padding:10px 12px;
+    border-radius:var(--radius);
+    z-index:100;
+    transition:top 0.2s ease;
+  }
+  .skip-link:focus{top:16px;}
+
+  /* animated neon hex background */
   #circuit-canvas{
     position:fixed;inset:0;z-index:0;pointer-events:none;
     width:100%;height:100%;
-    opacity:0.85;
-    mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, black 35%, transparent 92%);
-    -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, black 35%, transparent 92%);
+    opacity:0.82;
   }
-  /* static fallback grid, shown only if canvas/JS unavailable or reduced motion */
+  /* static fallback shown only if canvas/JS unavailable or reduced motion */
   .grid-bg{
     position:fixed;inset:0;z-index:0;pointer-events:none;
-    background-image:
-      linear-gradient(var(--line-soft) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-    background-size:48px 48px;
-    opacity:0.5;
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+    background:
+      radial-gradient(ellipse at top, rgba(35, 93, 180, 0.26), transparent 56%),
+      linear-gradient(180deg, #060b17 0%, #05070f 100%);
+    opacity:0.9;
     display:none;
   }
   @media (prefers-reduced-motion: reduce){
@@ -67,6 +104,23 @@
   }
 
   .wrap{max-width:1100px;margin:0 auto;padding:0 32px;position:relative;z-index:1;}
+
+  section .wrap{
+    background:linear-gradient(180deg, rgba(7, 14, 28, 0.72), rgba(6, 12, 23, 0.64));
+    border:1px solid rgba(79, 216, 208, 0.2);
+    border-radius:10px;
+    padding:28px 32px;
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+    box-shadow:0 18px 34px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(110, 187, 255, 0.12);
+  }
+
+  .hero .wrap{padding:34px 32px;}
+
+  @media (max-width:760px){
+    .wrap{padding:0 18px;}
+    section .wrap{padding:22px 18px;border-radius:8px;}
+  }
 
   /* trace rail running down the page */
   .rail{
@@ -183,8 +237,10 @@
   .card h3{font-family:var(--display);font-size:1.4rem;font-weight:600;margin-bottom:14px;}
   .card p{color:var(--text-muted);font-size:0.97rem;max-width:52ch;}
   .card-media{
+    position:relative;
+    overflow:hidden;
     margin-top:22px;
-    min-height:180px;
+    min-height:220px;
     border:1px dashed #3a4148;
     border-radius:var(--radius);
     background:linear-gradient(135deg, rgba(79,216,208,0.05), rgba(232,150,61,0.04));
@@ -198,6 +254,31 @@
     font-size:11.5px;
     letter-spacing:0.04em;
     text-transform:uppercase;
+  }
+  .card-media img,
+  .card-media video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:2px;
+    display:block;
+  }
+  .card-media img[data-zoomable]{cursor:zoom-in;}
+  .card-media::before{
+    content:'MEDIA';
+    position:absolute;
+    right:8px;
+    top:8px;
+    font-family:var(--mono);
+    font-size:10px;
+    letter-spacing:0.08em;
+    color:rgba(236, 233, 226, 0.7);
+    background:rgba(10,12,14,0.55);
+    border:1px solid rgba(79,216,208,0.35);
+    padding:3px 6px;
+    border-radius:2px;
+    z-index:2;
+    pointer-events:none;
   }
   .card-specs{border-left:1px solid var(--line);padding-left:32px;}
   @media (max-width:800px){ .card-specs{border-left:none;padding-left:0;border-top:1px solid var(--line);padding-top:24px;} }
@@ -229,9 +310,43 @@
 
   footer{border-top:1px solid var(--line);padding:28px 0;}
   .footer-row{display:flex;justify-content:space-between;color:var(--text-dim);font-family:var(--mono);font-size:11.5px;letter-spacing:0.03em;flex-wrap:wrap;gap:10px;}
+
+  .media-modal{
+    border:none;
+    padding:0;
+    background:transparent;
+    width:min(96vw, 1100px);
+    max-height:90vh;
+  }
+  .media-modal::backdrop{background:rgba(6,8,10,0.82);backdrop-filter:blur(4px);}
+  .media-modal-frame{
+    position:relative;
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:10px;
+  }
+  .media-modal img{display:block;width:100%;max-height:82vh;object-fit:contain;border-radius:2px;}
+  .media-modal-close{
+    position:absolute;
+    top:10px;
+    right:10px;
+    width:32px;
+    height:32px;
+    border:1px solid var(--line);
+    border-radius:2px;
+    background:rgba(10,12,14,0.86);
+    color:var(--text-primary);
+    font-size:18px;
+    line-height:1;
+    cursor:pointer;
+  }
+  .media-modal-close:focus-visible{outline:2px solid var(--cyan);outline-offset:1px;}
 </style>
 </head>
 <body>
+
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <canvas id="circuit-canvas"></canvas>
 <div class="grid-bg"></div>
@@ -249,7 +364,7 @@
   </div>
 </header>
 
-<main>
+<main id="main-content">
   <section class="hero" style="border-top:none;">
     <div class="wrap">
       <div class="eyebrow">MECHATRONICS ENGINEER — ROBOTICS &amp; AUTONOMOUS SYSTEMS</div>
@@ -297,9 +412,8 @@
             <h3>ARHA — Autonomous Retirement Home Assistant</h3>
             <p>Capstone project to design and build a functional nursing assistant humanoid robot for long-term care environments. Working in a multidisciplinary team to develop an autonomous assistant that mobilizes and delivers essential items, reducing nurse workload and retrieval time. My contributions focus on systems-level documentation, risk and safety analysis, and integration planning for reliable field operation.</p>
             <div class="card-media">
-              <video controls preload="metadata" playsinline poster="ARHA Image.png" style="width:100%;height:auto;border-radius:2px;display:block;">
+              <video controls autoplay muted loop playsinline preload="metadata" poster="ARHA Image.png" aria-label="ARHA humanoid project demo video">
                 <source src="27cff30b428143e883225480abf9df5b.mov" type="video/quicktime">
-                <source src="64d78cc557d34e7db9aa8caf96836ba3.mov" type="video/quicktime">
                 <a href="27cff30b428143e883225480abf9df5b.mov">Download ARHA demo video</a>
               </video>
             </div>
@@ -309,7 +423,7 @@
             <div class="spec-row"><span class="k">Compute</span><span class="v">STM32H723ZG + Intel NUC i7</span></div>
             <div class="spec-row"><span class="k">Perception</span><span class="v">2× RealSense D435</span></div>
             <div class="spec-row"><span class="k">End Effector</span><span class="v">PincOpen grippers</span></div>
-            <div class="spec-row"><span class="k">My Role</span><span class="v">Documentation &amp; Risk Lead</span></div>
+            <div class="spec-row"><span class="k">My Role</span><span class="v">Robotics Generalist · End-Effector</span></div>
           </div>
         </div>
 
@@ -317,12 +431,14 @@
           <div>
             <div class="card-tag">RESEARCH — HUMANOID ROBOTICS</div>
             <h3>GRASP-01 — Low-Cost 7-DOF Humanoid Arm</h3>
-            <p>Co-authored a research publication with Dr. Lang on a low-cost 7-degree-of-freedom humanoid robotic arm, presented at Polytechnique Montréal. Focused on making expressive, human-scale manipulation accessible outside high-end research labs.</p>
-            <div class="card-media"></div>
+            <p>Supported the team in building a full-scale 7-DOF humanoid arm from the ground up and co-authored the GRASP-01 publication under Dr. Haoxiang Lang. Contributions included NX/DFM-driven part development, tensile validation work against FEA material assumptions, and conference presentation of research outcomes at Polytechnique Montreal.</p>
+            <div class="card-media">
+              <img src="Humanoid Arms.jpeg" alt="GRASP-01 humanoid arm research prototype" loading="lazy" decoding="async" data-zoomable>
+            </div>
           </div>
           <div class="card-specs">
             <div class="spec-row"><span class="k">DOF</span><span class="v">7</span></div>
-            <div class="spec-row"><span class="k">Design Goal</span><span class="v">Low-cost, humanoid-scale</span></div>
+            <div class="spec-row"><span class="k">Methods</span><span class="v">NX, DFM, tensile validation</span></div>
             <div class="spec-row"><span class="k">Output</span><span class="v">Co-authored publication</span></div>
             <div class="spec-row"><span class="k">Presented</span><span class="v">Polytechnique Montréal, 2025</span></div>
           </div>
@@ -332,14 +448,16 @@
           <div>
             <div class="card-tag">WEARABLE — GESTURE RECOGNITION</div>
             <h3>ASL Translation Glove</h3>
-            <p>A wearable device that translates American Sign Language gestures into text/speech in real time, built around a flex-sensor array and an ESP32 gesture-recognition pipeline.</p>
-            <div class="card-media"></div>
+            <p>Designed a real-time ASL-to-speech wearable built on ESP32-S3 hardware with flex sensors, a 9-axis IMU, wireless connectivity, and embedded audio output. Implemented multicore FreeRTOS firmware for deterministic 50 Hz acquisition and low-latency classification, then deployed quantized 1D CNN inference with finite-state logic and cloud TTS integration for reliable assistive communication.</p>
+            <div class="card-media">
+              <img src="ASL to Speech.jpeg" alt="ASL to speech glove prototype" loading="lazy" decoding="async" data-zoomable>
+            </div>
           </div>
           <div class="card-specs">
-            <div class="spec-row"><span class="k">MCU</span><span class="v">ESP32</span></div>
-            <div class="spec-row"><span class="k">Sensing</span><span class="v">Flex sensor array</span></div>
-            <div class="spec-row"><span class="k">Pipeline</span><span class="v">Gesture recognition, real-time</span></div>
-            <div class="spec-row"><span class="k">Type</span><span class="v">Personal / team initiative</span></div>
+            <div class="spec-row"><span class="k">MCU</span><span class="v">ESP32-S3</span></div>
+            <div class="spec-row"><span class="k">Sensing</span><span class="v">Flex sensors + 9-axis IMU</span></div>
+            <div class="spec-row"><span class="k">Latency</span><span class="v">Sub-30 ms classification</span></div>
+            <div class="spec-row"><span class="k">ML Stack</span><span class="v">Quantized 1D CNN + TFLite</span></div>
           </div>
         </div>
 
@@ -347,13 +465,63 @@
           <div>
             <div class="card-tag">FORMULA SAE — ELECTRICAL SYSTEMS</div>
             <h3>Ontario Tech Racing — PCB Development</h3>
-            <p>Contributing member of the Formula SAE electrical/electronics team, designing printed circuit boards in Altium for the team's competition vehicle.</p>
-            <div class="card-media"></div>
+            <p>Contributed to Ontario Tech Racing's hardware and electronics build by designing PCB solutions in Altium, including pre-charge/discharge system work for the Formula SAE platform. Worked within FSAE rulesets and safety constraints while supporting practical on-vehicle integration and troubleshooting.</p>
+            <div class="card-media">
+              <img src="Racing Team.jpeg" alt="Ontario Tech Racing Formula SAE team working on race car" loading="lazy" decoding="async" data-zoomable>
+            </div>
           </div>
           <div class="card-specs">
             <div class="spec-row"><span class="k">Tooling</span><span class="v">Altium Designer</span></div>
-            <div class="spec-row"><span class="k">Scope</span><span class="v">PCB schematic &amp; layout</span></div>
+            <div class="spec-row"><span class="k">Scope</span><span class="v">Pre-charge/discharge PCB design</span></div>
             <div class="spec-row"><span class="k">Team</span><span class="v">Ontario Tech Racing FSAE</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="card-tag">NSERC RESEARCH — CABLE-DRIVEN ROBOTICS</div>
+            <h3>Pulley Robotics Testbed</h3>
+            <p>Awarded an NSERC student researcher role under Professor Mitchell Rushton, supporting cable-driven and continuum robotics research. Designed and built the mechanical system for a robot table and pulley-based test environment, enabling controlled experimentation and repeatable validation workflows.</p>
+            <div class="card-media">
+              <img src="Pulley Robotics.jpeg" alt="Pulley robotics research testbed" loading="lazy" decoding="async" data-zoomable>
+            </div>
+          </div>
+          <div class="card-specs">
+            <div class="spec-row"><span class="k">Program</span><span class="v">NSERC Undergraduate Research</span></div>
+            <div class="spec-row"><span class="k">Domain</span><span class="v">Cable-driven and continuum robotics</span></div>
+            <div class="spec-row"><span class="k">Focus</span><span class="v">Robot table mechanical system</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="card-tag">APPLIED ENGINEERING — AGRI-TECH STARTUP</div>
+            <h3>Akira Sensing — Farming Systems Buildout</h3>
+            <p>Contributed to applied engineering and sustainability deployments with Akira Sensing and partners, supporting autonomous farming infrastructure and sensor system integration. Work included MIG/TIG/polymer welding, aquaponics plumbing, farm-scale wind/solar power grid buildout, trailer construction, and field sensor deployment for autonomous data operations.</p>
+            <div class="card-media">
+              <img src="Farming Startup.jpeg" alt="Akira Sensing farming startup project field setup" loading="lazy" decoding="async" data-zoomable>
+            </div>
+          </div>
+          <div class="card-specs">
+            <div class="spec-row"><span class="k">Scope</span><span class="v">Sensors, infrastructure, deployment</span></div>
+            <div class="spec-row"><span class="k">Methods</span><span class="v">MIG/TIG/polymer welding, plumbing</span></div>
+            <div class="spec-row"><span class="k">Context</span><span class="v">Autonomous farming + sustainability</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <div class="card-tag">COMMUNICATIONS — AMATEUR RADIO</div>
+            <h3>Ham Radio Operations</h3>
+            <p>Active amateur radio operator supporting station setup, field communications, and RF troubleshooting. Experience includes practical hardware setup and operating discipline in live environments, reinforcing systems reliability, technical communication, and decision-making under time-sensitive conditions.</p>
+            <div class="card-media">
+              <img src="Ham Radio.jpeg" alt="Ham radio field operations setup" loading="lazy" decoding="async" data-zoomable>
+            </div>
+          </div>
+          <div class="card-specs">
+            <div class="spec-row"><span class="k">Area</span><span class="v">Field radio communications</span></div>
+            <div class="spec-row"><span class="k">Skills</span><span class="v">Setup, diagnostics, operations, Morse</span></div>
+            <div class="spec-row"><span class="k">License</span><span class="v">Basic amateur radio license</span></div>
           </div>
         </div>
 
@@ -361,12 +529,14 @@
           <div>
             <div class="card-tag">STUDENT ROCKETRY — SAFETY &amp; AVIONICS</div>
             <h3>Ontario Tech Space &amp; Rocketry</h3>
-            <p>Serving as Avionics lead and Chief Safety Officer, overseeing flight electronics and safety protocol for student-built high-power rockets.</p>
-            <div class="card-media"></div>
+            <p>Serve as Avionics lead and Chief Safety Officer, developing risk management systems, supporting technical documentation and insurance preparation, and contributing to flight electronics development. Supported launches exceeding Mach 1.4 and approximately 20,000 ft with a strong safety-first process.</p>
+            <div class="card-media">
+              <img src="Rocketry.jpeg" alt="Ontario Tech Space and Rocketry launch" loading="lazy" decoding="async" data-zoomable>
+            </div>
           </div>
           <div class="card-specs">
             <div class="spec-row"><span class="k">Roles</span><span class="v">Avionics · Chief Safety Officer</span></div>
-            <div class="spec-row"><span class="k">Domain</span><span class="v">Flight electronics, safety review</span></div>
+            <div class="spec-row"><span class="k">Domain</span><span class="v">Flight electronics, risk, launch safety</span></div>
           </div>
         </div>
 
@@ -387,7 +557,7 @@
         <div class="tl-item">
           <div class="tl-date">SEP 2022 - APR 2026 (EXPECTED)</div>
           <h4>Honours BEng, Mechatronics Engineering (Robotics &amp; Automation)</h4>
-          <p>Ontario Tech University. CGPA 3.54/4.3 with coursework in robotics, machine vision, mechatronics design, industrial automation, and AI/ML.</p>
+          <p>Ontario Tech University. CGPA 3.71/4.3 with coursework in robotics, machine vision, mechatronics design, industrial automation, and AI/ML.</p>
         </div>
         <div class="tl-item">
           <div class="tl-date">SEP 2014 - AUG 2018</div>
@@ -430,8 +600,8 @@
       <div class="contact-grid">
         <div class="contact-links">
           <a href="mailto:hello@example.com">hello@example.com</a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn <span>↗</span></a>
-          <a href="https://github.com" target="_blank" rel="noopener">GitHub <span>↗</span></a>
+          <a href="https://www.linkedin.com/in/riley-workman" target="_blank" rel="noopener">LinkedIn <span>↗</span></a>
+          <a href="https://github.com/RileyWorkman" target="_blank" rel="noopener">GitHub <span>↗</span></a>
         </div>
         <div style="font-family:var(--mono);font-size:12px;color:var(--text-dim);max-width:30ch;">
           Open to conversations on robotics research, capstone collaboration, and full-time or research opportunities.
@@ -448,6 +618,13 @@
   </div>
 </footer>
 
+<dialog class="media-modal" id="media-modal" aria-label="Expanded project media">
+  <div class="media-modal-frame">
+    <button class="media-modal-close" id="media-modal-close" aria-label="Close expanded image">x</button>
+    <img id="media-modal-image" alt="Expanded project image">
+  </div>
+</dialog>
+
 <script>
 (function(){
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -455,16 +632,91 @@
   if (!canvas || reduceMotion) return;
   var ctx = canvas.getContext('2d');
 
-  var CELL = 46;               // grid cell size in CSS px
-  var TRACE_COUNT_DESKTOP = 34;
-  var TRACE_COUNT_MOBILE = 16;
-  var LINE_COLOR = 'rgba(232, 233, 226, 0.05)';
-  var NODE_COLOR = 'rgba(232, 233, 226, 0.09)';
-  var CYAN = '79, 216, 208';
-  var COPPER = '232, 150, 61';
-
+  var HEX_RADIUS = 44;
+  var STROKE_BASE = 'rgba(76, 118, 190, 0.22)';
+  var STROKE_GLOW = 'rgba(80, 220, 255,';
+  var FILL_BASE = 'rgba(8, 16, 34, 0.58)';
+  var FILL_GLOW = 'rgba(46, 150, 255,';
+  var FLOOR_LINE = 'rgba(67, 184, 255,';
   var dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
-  var w, h, cols, rows, traces, pulses;
+  var w, h, colStep, rowStep, hexes = [], lastTime = null, pulseTimer = 0;
+
+  function rand(min, max){
+    return Math.random() * (max - min) + min;
+  }
+
+  function buildHexes(){
+    hexes = [];
+    var cols = Math.ceil(w / colStep) + 2;
+    var rows = Math.ceil(h / rowStep) + 2;
+    for (var row = 0; row < rows; row++){
+      var y = row * rowStep - HEX_RADIUS;
+      var xOffset = (row % 2) * (colStep * 0.5);
+      for (var col = 0; col < cols; col++){
+        var x = col * colStep + xOffset - HEX_RADIUS;
+        hexes.push({
+          x: x,
+          y: y,
+          glow: rand(0, 0.08),
+          phase: rand(0, Math.PI * 2),
+          cooldown: rand(0, 1000)
+        });
+      }
+    }
+  }
+
+  function drawHexPath(cx, cy, r){
+    ctx.beginPath();
+    for (var i = 0; i < 6; i++){
+      var angle = (Math.PI / 3) * i + Math.PI / 6;
+      var px = cx + Math.cos(angle) * r;
+      var py = cy + Math.sin(angle) * r;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+  }
+
+  function drawBackground(){
+    var bg = ctx.createLinearGradient(0, 0, 0, h);
+    bg.addColorStop(0, '#071228');
+    bg.addColorStop(0.52, '#050d1d');
+    bg.addColorStop(1, '#04070f');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+
+    var topGlow = ctx.createRadialGradient(w * 0.5, h * 0.18, 20, w * 0.5, h * 0.18, w * 0.8);
+    topGlow.addColorStop(0, 'rgba(38, 129, 255, 0.35)');
+    topGlow.addColorStop(1, 'rgba(38, 129, 255, 0)');
+    ctx.fillStyle = topGlow;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  function drawFloorLines(time){
+    var horizon = h * 0.58;
+    ctx.lineWidth = 1;
+    for (var i = 0; i < 17; i++){
+      var ratio = i / 16;
+      var y = horizon + Math.pow(ratio, 1.7) * (h - horizon);
+      var alpha = 0.08 + ratio * 0.15;
+      ctx.strokeStyle = FLOOR_LINE + alpha.toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(w, y);
+      ctx.stroke();
+    }
+
+    var center = w * 0.5;
+    for (var col = -10; col <= 10; col++){
+      var spread = col * (w * 0.035);
+      var pulse = Math.sin(time * 0.001 + col * 0.8) * 0.015;
+      ctx.strokeStyle = FLOOR_LINE + '0.11)';
+      ctx.beginPath();
+      ctx.moveTo(center, horizon);
+      ctx.lineTo(center + spread * (1.2 + pulse), h);
+      ctx.stroke();
+    }
+  }
 
   function resize(){
     w = window.innerWidth;
@@ -474,140 +726,56 @@
     canvas.style.width = w + 'px';
     canvas.style.height = h + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    cols = Math.ceil(w / CELL) + 1;
-    rows = Math.ceil(h / CELL) + 1;
-    buildTraces();
+    colStep = HEX_RADIUS * 1.72;
+    rowStep = HEX_RADIUS * 1.5;
+    buildHexes();
   }
 
-  // build a set of right-angle "PCB trace" paths on the grid
-  function buildTraces(){
-    traces = [];
-    var count = w < 700 ? TRACE_COUNT_MOBILE : TRACE_COUNT_DESKTOP;
-    for (var i = 0; i < count; i++){
-      var gx = Math.floor(Math.random() * cols);
-      var gy = Math.floor(Math.random() * rows * 0.7); // bias toward upper area (hero)
-      var points = [{x: gx, y: gy}];
-      var segCount = 3 + Math.floor(Math.random() * 5);
-      var dir = Math.floor(Math.random() * 4); // 0 up,1 right,2 down,3 left
-      for (var s = 0; s < segCount; s++){
-        // mostly continue straight, sometimes turn 90deg
-        if (Math.random() < 0.55) {
-          dir = (dir + (Math.random() < 0.5 ? 1 : -1) + 4) % 4;
-        }
-        var len = 2 + Math.floor(Math.random() * 6);
-        var last = points[points.length - 1];
-        var nx = last.x, ny = last.y;
-        if (dir === 0) ny -= len;
-        else if (dir === 1) nx += len;
-        else if (dir === 2) ny += len;
-        else nx -= len;
-        nx = Math.max(0, Math.min(cols, nx));
-        ny = Math.max(0, Math.min(rows, ny));
-        points.push({x: nx, y: ny});
-      }
-      // convert to pixel coords + compute cumulative lengths
-      var px = points.map(function(p){ return {x: p.x * CELL, y: p.y * CELL}; });
-      var cum = [0];
-      for (var j = 1; j < px.length; j++){
-        var dx = px[j].x - px[j-1].x, dy = px[j].y - px[j-1].y;
-        cum.push(cum[j-1] + Math.sqrt(dx*dx + dy*dy));
-      }
-      traces.push({ pts: px, cum: cum, total: cum[cum.length - 1] });
-    }
-    // seed pulses, roughly one per few traces
-    pulses = [];
-    var pulseCount = Math.max(4, Math.floor(traces.length * 0.4));
-    for (var k = 0; k < pulseCount; k++){
-      spawnPulse();
-    }
-  }
-
-  function spawnPulse(){
-    var t = traces[Math.floor(Math.random() * traces.length)];
-    if (!t || t.total < 20) return;
-    pulses.push({
-      trace: t,
-      dist: 0,
-      speed: 40 + Math.random() * 70, // px per second
-      color: Math.random() < 0.5 ? CYAN : COPPER,
-      trail: []
-    });
-  }
-
-  function pointAtDistance(trace, dist){
-    var cum = trace.cum, pts = trace.pts;
-    if (dist <= 0) return pts[0];
-    if (dist >= trace.total) return pts[pts.length - 1];
-    for (var i = 1; i < cum.length; i++){
-      if (dist <= cum[i]){
-        var segLen = cum[i] - cum[i-1];
-        var tRatio = segLen === 0 ? 0 : (dist - cum[i-1]) / segLen;
-        return {
-          x: pts[i-1].x + (pts[i].x - pts[i-1].x) * tRatio,
-          y: pts[i-1].y + (pts[i].y - pts[i-1].y) * tRatio
-        };
-      }
-    }
-    return pts[pts.length - 1];
-  }
-
-  function drawStaticTraces(){
-    ctx.strokeStyle = LINE_COLOR;
-    ctx.lineWidth = 1;
-    traces.forEach(function(t){
-      ctx.beginPath();
-      t.pts.forEach(function(p, idx){
-        if (idx === 0) ctx.moveTo(p.x, p.y);
-        else ctx.lineTo(p.x, p.y);
-      });
-      ctx.stroke();
-      // via dots at bends
-      ctx.fillStyle = NODE_COLOR;
-      t.pts.forEach(function(p){
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
-        ctx.fill();
-      });
-    });
-  }
-
-  var lastTime = null;
   function frame(now){
     if (lastTime === null) lastTime = now;
-    var dt = Math.min(0.05, (now - lastTime) / 1000);
+    var dt = Math.min(0.04, (now - lastTime) / 1000);
     lastTime = now;
+    pulseTimer += dt;
 
-    ctx.clearRect(0, 0, w, h);
-    drawStaticTraces();
-
-    for (var i = pulses.length - 1; i >= 0; i--){
-      var p = pulses[i];
-      p.dist += p.speed * dt;
-      var pos = pointAtDistance(p.trace, p.dist);
-      p.trail.push({x: pos.x, y: pos.y});
-      if (p.trail.length > 14) p.trail.shift();
-
-      // draw fading trail
-      for (var j = 0; j < p.trail.length; j++){
-        var alpha = (j / p.trail.length) * 0.5;
-        var tp = p.trail[j];
-        ctx.fillStyle = 'rgba(' + p.color + ',' + alpha.toFixed(3) + ')';
-        ctx.beginPath();
-        ctx.arc(tp.x, tp.y, 1.8, 0, Math.PI * 2);
-        ctx.fill();
+    if (pulseTimer >= 0.08 && hexes.length){
+      pulseTimer = 0;
+      var burst = w < 720 ? 2 : 4;
+      for (var b = 0; b < burst; b++){
+        var hx = hexes[Math.floor(Math.random() * hexes.length)];
+        if (hx) hx.glow = Math.min(1, hx.glow + rand(0.55, 1));
       }
-      // glowing head
-      var grad = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 7);
-      grad.addColorStop(0, 'rgba(' + p.color + ',0.9)');
-      grad.addColorStop(1, 'rgba(' + p.color + ',0)');
-      ctx.fillStyle = grad;
-      ctx.beginPath();
-      ctx.arc(pos.x, pos.y, 7, 0, Math.PI * 2);
+    }
+
+    drawBackground();
+    drawFloorLines(now);
+
+    for (var i = 0; i < hexes.length; i++){
+      var hex = hexes[i];
+      var pulse = (Math.sin(now * 0.0018 + hex.phase) + 1) * 0.035;
+      hex.glow = Math.max(0, hex.glow - dt * 0.5);
+      var intensity = Math.min(1, pulse + hex.glow);
+
+      drawHexPath(hex.x, hex.y, HEX_RADIUS);
+      ctx.fillStyle = intensity > 0.22
+        ? FILL_GLOW + (0.14 + intensity * 0.46).toFixed(3) + ')'
+        : FILL_BASE;
       ctx.fill();
 
-      if (p.dist >= p.trace.total){
-        pulses.splice(i, 1);
-        spawnPulse();
+      drawHexPath(hex.x, hex.y, HEX_RADIUS - 1.1);
+      ctx.lineWidth = intensity > 0.3 ? 1.9 : 1.05;
+      ctx.strokeStyle = intensity > 0.3
+        ? STROKE_GLOW + (0.2 + intensity * 0.7).toFixed(3) + ')'
+        : STROKE_BASE;
+      ctx.stroke();
+
+      if (intensity > 0.55){
+        var glowGrad = ctx.createRadialGradient(hex.x, hex.y, 0, hex.x, hex.y, HEX_RADIUS * 1.15);
+        glowGrad.addColorStop(0, 'rgba(76, 203, 255,' + (0.15 + intensity * 0.2).toFixed(3) + ')');
+        glowGrad.addColorStop(1, 'rgba(76, 203, 255,0)');
+        ctx.fillStyle = glowGrad;
+        ctx.beginPath();
+        ctx.arc(hex.x, hex.y, HEX_RADIUS * 1.2, 0, Math.PI * 2);
+        ctx.fill();
       }
     }
 
@@ -617,6 +785,47 @@
   window.addEventListener('resize', resize);
   resize();
   requestAnimationFrame(frame);
+})();
+</script>
+<script>
+(function(){
+  var modal = document.getElementById('media-modal');
+  var modalImage = document.getElementById('media-modal-image');
+  var closeButton = document.getElementById('media-modal-close');
+  var zoomable = document.querySelectorAll('img[data-zoomable]');
+  if (!modal || !modalImage || !closeButton || !zoomable.length) return;
+
+  function openModal(img){
+    modalImage.src = img.src;
+    modalImage.alt = img.alt || 'Expanded project image';
+    if (typeof modal.showModal === 'function') modal.showModal();
+    closeButton.focus();
+  }
+
+  function closeModal(){
+    if (modal.open) modal.close();
+    modalImage.src = '';
+  }
+
+  zoomable.forEach(function(img){
+    img.addEventListener('click', function(){ openModal(img); });
+    img.addEventListener('keydown', function(event){
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openModal(img);
+      }
+    });
+    img.setAttribute('tabindex', '0');
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', (img.alt || 'Project image') + ' (click to expand)');
+  });
+
+  closeButton.addEventListener('click', closeModal);
+  modal.addEventListener('click', function(event){
+    var frame = modal.querySelector('.media-modal-frame');
+    if (frame && !frame.contains(event.target)) closeModal();
+  });
+  modal.addEventListener('cancel', function(){ closeModal(); });
 })();
 </script>
 </body>
