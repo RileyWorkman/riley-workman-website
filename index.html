@@ -182,6 +182,23 @@
   .card-tag{font-family:var(--mono);font-size:11px;color:var(--copper);letter-spacing:0.08em;margin-bottom:12px;}
   .card h3{font-family:var(--display);font-size:1.4rem;font-weight:600;margin-bottom:14px;}
   .card p{color:var(--text-muted);font-size:0.97rem;max-width:52ch;}
+  .card-media{
+    margin-top:22px;
+    min-height:180px;
+    border:1px dashed #3a4148;
+    border-radius:var(--radius);
+    background:linear-gradient(135deg, rgba(79,216,208,0.05), rgba(232,150,61,0.04));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:16px;
+    color:var(--text-dim);
+    font-family:var(--mono);
+    font-size:11.5px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+  }
   .card-specs{border-left:1px solid var(--line);padding-left:32px;}
   @media (max-width:800px){ .card-specs{border-left:none;padding-left:0;border-top:1px solid var(--line);padding-top:24px;} }
   .spec-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:0.88rem;}
@@ -237,14 +254,14 @@
     <div class="wrap">
       <div class="eyebrow">MECHATRONICS ENGINEER — ROBOTICS &amp; AUTONOMOUS SYSTEMS</div>
       <h1>Riley "Ace" Workman builds machines that <span class="accent">move with purpose.</span></h1>
-      <p class="hero-sub">Robotics &amp; automation engineer finishing an Honours BEng in Mechatronics at Ontario Tech University, with a double major in Pure &amp; Applied Mathematics. <b>Starting an MASc in Mechatronics this fall</b>, researching AI/ML for intelligent autonomous systems under Dr. Haoxiang Lang. Formerly a Senior Actuarial &amp; Risk Analyst — now building robots instead of pricing risk.</p>
+      <p class="hero-sub">Mechatronics engineering student with a strong track record of balancing <b>full-time coursework, part-time work, and intensive technical volunteering</b> across robotics, motorsports, and rocketry. My work combines hands-on hardware development, embedded systems, and machine learning with a rigorous quantitative foundation from actuarial and enterprise risk modeling.</p>
       <div class="hero-actions">
         <a class="btn" href="#work">View projects</a>
         <a class="btn ghost" href="#contact">Get in touch</a>
       </div>
       <div class="hero-specs">
         <div><div class="k">Focus</div><div class="v">Robotic Manipulation</div></div>
-        <div><div class="k">Degree</div><div class="v">BEng Mechatronics '26</div></div>
+        <div><div class="k">Degree</div><div class="v">BEng Mechatronics '26<br>BSc Double Major, Applied &amp; Pure Mathematics '18</div></div>
         <div><div class="k">Next</div><div class="v">MASc, Fall 2026</div></div>
         <div><div class="k">Base</div><div class="v">Ontario, Canada</div></div>
       </div>
@@ -255,15 +272,15 @@
     <div class="section-node"></div>
     <div class="wrap">
       <div class="section-head"><span class="section-num">01</span><h2>About</h2></div>
-      <p class="about-body">I like systems that have to work in the real world — where the math meets friction, backlash, and noisy sensors. My background spans <b>dual-arm manipulation, embedded firmware, computer vision, and simulation</b>, built through capstone robotics, a humanoid-arm research publication, and a wearable ASL-translation glove. Before engineering, I spent years as an actuarial and risk analyst running stochastic and Monte Carlo models — training that now shows up in how I approach uncertainty, reliability, and failure analysis (DFMEA/FMECA) in hardware.</p>
+      <p class="about-body">I build systems for real operating environments, where mechanical limits, noisy sensing, and safety constraints matter as much as theory. My background includes <b>robotics design and manufacturing, embedded firmware, machine vision, additive manufacturing, and quantitative risk analysis</b>. Across FSAE, Rocketry, capstone humanoid robotics, and research labs, I have focused on disciplined execution, strong problem-solving, and practical engineering delivery. My previous actuarial and risk management experience continues to shape how I approach reliability, enterprise risk, and safety-first design decisions.</p>
       <div class="about-tags">
-        <span class="tag">ROS / Embedded C++</span>
-        <span class="tag">STM32 / ESP32</span>
-        <span class="tag">Python · OpenCV</span>
-        <span class="tag">PLC / Ladder Logic</span>
-        <span class="tag">Monte Carlo Simulation</span>
-        <span class="tag">Altium PCB Design</span>
-        <span class="tag">Kinematics &amp; Manipulability Analysis</span>
+        <span class="tag">Python · MATLAB · SQL · C# · R</span>
+        <span class="tag">C++ · HTML · CSS · JavaScript</span>
+        <span class="tag">CAD · PCB Design · FEA</span>
+        <span class="tag">3D Printing · Additive Manufacturing</span>
+        <span class="tag">PLC Programming · Basic ROS</span>
+        <span class="tag">Machine Vision · AI/ML</span>
+        <span class="tag">Risk Modeling · @RISK · VBA</span>
       </div>
     </div>
   </section>
@@ -278,7 +295,14 @@
           <div>
             <div class="card-tag">CAPSTONE — DUAL-ARM ASSISTIVE ROBOTICS</div>
             <h3>ARHA — Autonomous Retirement Home Assistant</h3>
-            <p>A semi-autonomous dual-arm robot designed for long-term care settings, developed with a five-person team under Dr. Haoxiang Lang. Led documentation, risk analysis, and a Monte Carlo study on arm kinematics using Yoshikawa manipulability analysis to validate reachability and dexterity.</p>
+            <p>Capstone project to design and build a functional nursing assistant humanoid robot for long-term care environments. Working in a multidisciplinary team to develop an autonomous assistant that mobilizes and delivers essential items, reducing nurse workload and retrieval time. My contributions focus on systems-level documentation, risk and safety analysis, and integration planning for reliable field operation.</p>
+            <div class="card-media">
+              <video controls preload="metadata" playsinline poster="ARHA Image.png" style="width:100%;height:auto;border-radius:2px;display:block;">
+                <source src="27cff30b428143e883225480abf9df5b.mov" type="video/quicktime">
+                <source src="64d78cc557d34e7db9aa8caf96836ba3.mov" type="video/quicktime">
+                <a href="27cff30b428143e883225480abf9df5b.mov">Download ARHA demo video</a>
+              </video>
+            </div>
           </div>
           <div class="card-specs">
             <div class="spec-row"><span class="k">Actuation</span><span class="v">12× MyActuator RMD‑X8‑32</span></div>
@@ -294,6 +318,7 @@
             <div class="card-tag">RESEARCH — HUMANOID ROBOTICS</div>
             <h3>GRASP-01 — Low-Cost 7-DOF Humanoid Arm</h3>
             <p>Co-authored a research publication with Dr. Lang on a low-cost 7-degree-of-freedom humanoid robotic arm, presented at Polytechnique Montréal. Focused on making expressive, human-scale manipulation accessible outside high-end research labs.</p>
+            <div class="card-media"></div>
           </div>
           <div class="card-specs">
             <div class="spec-row"><span class="k">DOF</span><span class="v">7</span></div>
@@ -308,6 +333,7 @@
             <div class="card-tag">WEARABLE — GESTURE RECOGNITION</div>
             <h3>ASL Translation Glove</h3>
             <p>A wearable device that translates American Sign Language gestures into text/speech in real time, built around a flex-sensor array and an ESP32 gesture-recognition pipeline.</p>
+            <div class="card-media"></div>
           </div>
           <div class="card-specs">
             <div class="spec-row"><span class="k">MCU</span><span class="v">ESP32</span></div>
@@ -322,6 +348,7 @@
             <div class="card-tag">FORMULA SAE — ELECTRICAL SYSTEMS</div>
             <h3>Ontario Tech Racing — PCB Development</h3>
             <p>Contributing member of the Formula SAE electrical/electronics team, designing printed circuit boards in Altium for the team's competition vehicle.</p>
+            <div class="card-media"></div>
           </div>
           <div class="card-specs">
             <div class="spec-row"><span class="k">Tooling</span><span class="v">Altium Designer</span></div>
@@ -335,6 +362,7 @@
             <div class="card-tag">STUDENT ROCKETRY — SAFETY &amp; AVIONICS</div>
             <h3>Ontario Tech Space &amp; Rocketry</h3>
             <p>Serving as Avionics lead and Chief Safety Officer, overseeing flight electronics and safety protocol for student-built high-power rockets.</p>
+            <div class="card-media"></div>
           </div>
           <div class="card-specs">
             <div class="spec-row"><span class="k">Roles</span><span class="v">Avionics · Chief Safety Officer</span></div>
@@ -354,17 +382,42 @@
         <div class="tl-item">
           <div class="tl-date">FALL 2026 →</div>
           <h4>MASc, Mechatronics Engineering — Ontario Tech University</h4>
-          <p>Part-time research MASc under Dr. Haoxiang Lang, focused on AI/ML for intelligent autonomous systems and robotics. Supported in part by a Mitacs Accelerate award.</p>
+          <p>Research focus in AI/ML for intelligent autonomous systems under Dr. Haoxiang Lang, with robotics-centered applied development.</p>
         </div>
         <div class="tl-item">
-          <div class="tl-date">EXPECTED APRIL 2026</div>
-          <h4>Honours BEng, Mechatronics Engineering — Ontario Tech University</h4>
-          <p>Robotics &amp; Automation specialization. Double major in Pure &amp; Applied Mathematics, University of Calgary.</p>
+          <div class="tl-date">SEP 2022 - APR 2026 (EXPECTED)</div>
+          <h4>Honours BEng, Mechatronics Engineering (Robotics &amp; Automation)</h4>
+          <p>Ontario Tech University. CGPA 3.54/4.3 with coursework in robotics, machine vision, mechatronics design, industrial automation, and AI/ML.</p>
         </div>
         <div class="tl-item">
-          <div class="tl-date">PRIOR</div>
-          <h4>Senior Actuarial &amp; Risk Management Analyst — AON</h4>
-          <p>Built stochastic financial and Monte Carlo simulation models (@RISK, VBA automation) for enterprise risk analysis — a quantitative foundation now applied to robotics reliability and simulation work.</p>
+          <div class="tl-date">SEP 2014 - AUG 2018</div>
+          <h4>Double Major, Pure &amp; Applied Mathematics — University of Calgary</h4>
+          <p>Foundation in statistics, numerical analysis, algebra, cryptography, and computational mathematics.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">MAY 2025 - SEP 2025</div>
+          <h4>Quality Assurance Engineer Co-op — S&amp;C Electric (Toronto)</h4>
+          <p>Performed root-cause investigations, inspections, and quality audits on switchgear products; supported NDT program development; used CMM/metrology workflows and process documentation to improve quality control.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">SEP 2018 - MAY 2025</div>
+          <h4>Senior Actuarial / Risk Management Analyst — AON</h4>
+          <p>Led and presented quantitative risk projects, including EV battery degradation modeling, enterprise risk workshops, and financial/stochastic analyses using @RISK, R, VBA, and Excel.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">JAN 2024 - PRESENT</div>
+          <h4>Akira Sensing — Applied Engineering Contributor</h4>
+          <p>Contributed to autonomous farming and sustainability projects spanning sensor hardware/software integration, welding, infrastructure build-out, and field deployment support.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">JAN 2024 - JUL 2024</div>
+          <h4>Research Assistant &amp; Lab Risk Manager — Ontario Tech University</h4>
+          <p>Co-authored GRASP-01 publication, supported safety standards and lab training operations, and contributed to advanced prototyping and cost optimization initiatives.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">MAY 2024 - DEC 2024</div>
+          <h4>NSERC Student Researcher &amp; Undergraduate Teaching Assistant</h4>
+          <p>Awarded NSERC research role in robotics and assisted Calculus I delivery for 900+ students while designing and building mechanical research infrastructure.</p>
         </div>
       </div>
     </div>
