@@ -42,7 +42,15 @@
   a{color:inherit;text-decoration:none;}
   ::selection{background:var(--copper);color:#0a0c0e;}
 
-  /* background schematic grid */
+  /* animated circuit background */
+  #circuit-canvas{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    width:100%;height:100%;
+    opacity:0.85;
+    mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, black 35%, transparent 92%);
+    -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 0%, black 35%, transparent 92%);
+  }
+  /* static fallback grid, shown only if canvas/JS unavailable or reduced motion */
   .grid-bg{
     position:fixed;inset:0;z-index:0;pointer-events:none;
     background-image:
@@ -51,6 +59,11 @@
     background-size:48px 48px;
     opacity:0.5;
     mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+    display:none;
+  }
+  @media (prefers-reduced-motion: reduce){
+    #circuit-canvas{display:none;}
+    .grid-bg{display:block;}
   }
 
   .wrap{max-width:1100px;margin:0 auto;padding:0 32px;position:relative;z-index:1;}
@@ -203,6 +216,7 @@
 </head>
 <body>
 
+<canvas id="circuit-canvas"></canvas>
 <div class="grid-bg"></div>
 <div class="rail"></div>
 
@@ -381,5 +395,176 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canvas = document.getElementById('circuit-canvas');
+  if (!canvas || reduceMotion) return;
+  var ctx = canvas.getContext('2d');
+
+  var CELL = 46;               // grid cell size in CSS px
+  var TRACE_COUNT_DESKTOP = 34;
+  var TRACE_COUNT_MOBILE = 16;
+  var LINE_COLOR = 'rgba(232, 233, 226, 0.05)';
+  var NODE_COLOR = 'rgba(232, 233, 226, 0.09)';
+  var CYAN = '79, 216, 208';
+  var COPPER = '232, 150, 61';
+
+  var dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2));
+  var w, h, cols, rows, traces, pulses;
+
+  function resize(){
+    w = window.innerWidth;
+    h = window.innerHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = Math.ceil(w / CELL) + 1;
+    rows = Math.ceil(h / CELL) + 1;
+    buildTraces();
+  }
+
+  // build a set of right-angle "PCB trace" paths on the grid
+  function buildTraces(){
+    traces = [];
+    var count = w < 700 ? TRACE_COUNT_MOBILE : TRACE_COUNT_DESKTOP;
+    for (var i = 0; i < count; i++){
+      var gx = Math.floor(Math.random() * cols);
+      var gy = Math.floor(Math.random() * rows * 0.7); // bias toward upper area (hero)
+      var points = [{x: gx, y: gy}];
+      var segCount = 3 + Math.floor(Math.random() * 5);
+      var dir = Math.floor(Math.random() * 4); // 0 up,1 right,2 down,3 left
+      for (var s = 0; s < segCount; s++){
+        // mostly continue straight, sometimes turn 90deg
+        if (Math.random() < 0.55) {
+          dir = (dir + (Math.random() < 0.5 ? 1 : -1) + 4) % 4;
+        }
+        var len = 2 + Math.floor(Math.random() * 6);
+        var last = points[points.length - 1];
+        var nx = last.x, ny = last.y;
+        if (dir === 0) ny -= len;
+        else if (dir === 1) nx += len;
+        else if (dir === 2) ny += len;
+        else nx -= len;
+        nx = Math.max(0, Math.min(cols, nx));
+        ny = Math.max(0, Math.min(rows, ny));
+        points.push({x: nx, y: ny});
+      }
+      // convert to pixel coords + compute cumulative lengths
+      var px = points.map(function(p){ return {x: p.x * CELL, y: p.y * CELL}; });
+      var cum = [0];
+      for (var j = 1; j < px.length; j++){
+        var dx = px[j].x - px[j-1].x, dy = px[j].y - px[j-1].y;
+        cum.push(cum[j-1] + Math.sqrt(dx*dx + dy*dy));
+      }
+      traces.push({ pts: px, cum: cum, total: cum[cum.length - 1] });
+    }
+    // seed pulses, roughly one per few traces
+    pulses = [];
+    var pulseCount = Math.max(4, Math.floor(traces.length * 0.4));
+    for (var k = 0; k < pulseCount; k++){
+      spawnPulse();
+    }
+  }
+
+  function spawnPulse(){
+    var t = traces[Math.floor(Math.random() * traces.length)];
+    if (!t || t.total < 20) return;
+    pulses.push({
+      trace: t,
+      dist: 0,
+      speed: 40 + Math.random() * 70, // px per second
+      color: Math.random() < 0.5 ? CYAN : COPPER,
+      trail: []
+    });
+  }
+
+  function pointAtDistance(trace, dist){
+    var cum = trace.cum, pts = trace.pts;
+    if (dist <= 0) return pts[0];
+    if (dist >= trace.total) return pts[pts.length - 1];
+    for (var i = 1; i < cum.length; i++){
+      if (dist <= cum[i]){
+        var segLen = cum[i] - cum[i-1];
+        var tRatio = segLen === 0 ? 0 : (dist - cum[i-1]) / segLen;
+        return {
+          x: pts[i-1].x + (pts[i].x - pts[i-1].x) * tRatio,
+          y: pts[i-1].y + (pts[i].y - pts[i-1].y) * tRatio
+        };
+      }
+    }
+    return pts[pts.length - 1];
+  }
+
+  function drawStaticTraces(){
+    ctx.strokeStyle = LINE_COLOR;
+    ctx.lineWidth = 1;
+    traces.forEach(function(t){
+      ctx.beginPath();
+      t.pts.forEach(function(p, idx){
+        if (idx === 0) ctx.moveTo(p.x, p.y);
+        else ctx.lineTo(p.x, p.y);
+      });
+      ctx.stroke();
+      // via dots at bends
+      ctx.fillStyle = NODE_COLOR;
+      t.pts.forEach(function(p){
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    });
+  }
+
+  var lastTime = null;
+  function frame(now){
+    if (lastTime === null) lastTime = now;
+    var dt = Math.min(0.05, (now - lastTime) / 1000);
+    lastTime = now;
+
+    ctx.clearRect(0, 0, w, h);
+    drawStaticTraces();
+
+    for (var i = pulses.length - 1; i >= 0; i--){
+      var p = pulses[i];
+      p.dist += p.speed * dt;
+      var pos = pointAtDistance(p.trace, p.dist);
+      p.trail.push({x: pos.x, y: pos.y});
+      if (p.trail.length > 14) p.trail.shift();
+
+      // draw fading trail
+      for (var j = 0; j < p.trail.length; j++){
+        var alpha = (j / p.trail.length) * 0.5;
+        var tp = p.trail[j];
+        ctx.fillStyle = 'rgba(' + p.color + ',' + alpha.toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.arc(tp.x, tp.y, 1.8, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      // glowing head
+      var grad = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, 7);
+      grad.addColorStop(0, 'rgba(' + p.color + ',0.9)');
+      grad.addColorStop(1, 'rgba(' + p.color + ',0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 7, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (p.dist >= p.trace.total){
+        pulses.splice(i, 1);
+        spawnPulse();
+      }
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(frame);
+})();
+</script>
 </body>
 </html>
